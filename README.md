@@ -1,2 +1,2 @@
-# Data-Structures-And-Algorithms
-All the codes to the problems I'll be solving from now on!
+# Leetcode-Solutions
+Submissions of my solved Leetcode problems.
