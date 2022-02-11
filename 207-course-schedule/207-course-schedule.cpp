@@ -1,40 +1,35 @@
 class Solution {
 public:
-    
-    bool dfs(int i, vector<vector<int>> &g, vector<int> &vis, vector<int> &dvis)
-    {
-        vis[i]++;
-        dvis[i]++;
-        for(auto v: g[i])
+    bool canFinish(int numCourses, vector<vector<int>>& prereq) {
+        vector<vector<int>> graph(numCourses);
+        vector<int> degree(numCourses);
+        for(auto i: prereq)
         {
-            if(dvis[v]) return false;
-            if(!vis[v])
+            graph[i[1]].push_back(i[0]);
+            degree[i[0]]++;
+        }
+        queue<int> zerodeg;
+        for(int i = 0 ; i <degree.size(); i++)
+        {
+            if(degree[i] == 0)
             {
-                bool ret = dfs(v,g,vis,dvis);
-                if(ret == false)
-                    return false;
+                zerodeg.push(i);
+                numCourses --;
             }
         }
-        dvis[i] --;
-        return true;
-    }
-    
-    bool canFinish(int n, vector<vector<int>>& pre) {
-        vector<vector<int>> g(n);
-        for(auto i: pre)
+        while(!zerodeg.empty())
         {
-            g[i[0]].push_back(i[1]);
-        }
-        
-        vector<int> vis(n,0), dvis(n,0);
-        for(int i = 0 ; i < n ; i++)
-        {
-            if(!vis[i])
+            int curr = zerodeg.front();
+            zerodeg.pop();
+            for(auto v: graph[curr])
             {
-                if(!dfs(i,g,vis,dvis))
-                    return false;
+                if(--degree[v] == 0)
+                {
+                    zerodeg.push(v);
+                    numCourses--;
+                }
             }
         }
-        return true;
+        return numCourses == 0;
     }
 };
