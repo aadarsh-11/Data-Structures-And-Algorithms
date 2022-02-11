@@ -2,35 +2,41 @@ class Solution {
 public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         
-        vector<set<int>> g(n);
+        vector<vector<int>> g(n);
+        vector<int> deg(n);
         for(auto i: edges)
         {
-            g[i[0]].insert(i[1]);
-            g[i[1]].insert(i[0]);
+            g[i[0]].push_back(i[1]);
+            g[i[1]].push_back(i[0]);
+            deg[i[0]]++;
+            deg[i[1]]++;
         }
-        vector<int> l;
+        queue<int> q;
         for(int i =0; i < n ; i++)
         {
-            if(g[i].size() == 1)
-                l.push_back(i);
+            if(deg[i] == 1)
+                q.push(i);
         }
-        int rem = n;
-        while(rem>2)
+        vector<int> ans;
+        while(!q.empty())
         {
-            vector<int> newL;
-            for(auto leaf:l)
+            ans.clear();
+            int s = q.size();
+            for(int i = 0 ; i < s; i++)
             {
-                int par = *g[leaf].begin();
-                g[par].erase(g[par].find(leaf));
-                if(g[par].size() == 1)
+                int leaf = q.front();
+                q.pop();
+                ans.push_back(leaf);
+                for(auto par: g[leaf])
                 {
-                    newL.push_back(par);
+                    if(--deg[par] == 1)
+                    {
+                        q.push(par);
+                    }
                 }
-                rem--;
-            }
-            l = newL;            
+            }           
         }
-        if(l.size() == 0) l.push_back(0);
-        return l;
+        if(ans.size() == 0) ans.push_back(0);
+        return ans;
     }
 };
