@@ -4,7 +4,7 @@ public:
         int ans =2;
         queue<string> q;
         int n = dict.size();
-        map<string, bool>mp;
+        unordered_map<string, bool>mp;
         bool found = 0;
         for(auto i: dict)
         {
