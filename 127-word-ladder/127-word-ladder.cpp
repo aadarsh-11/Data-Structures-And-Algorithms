@@ -1,54 +1,42 @@
 class Solution {
 public:
-    bool cmp(string &s,string &t)
-    {
-        int d = 0;
-        for(int i = 0 ; i < s.size(); i++)
+    int ladderLength(string b, string e, vector<string>& dict) {
+        int ans =2;
+        queue<string> q;
+        int n = dict.size();
+        map<string, bool>mp;
+        bool found = 0;
+        for(auto i: dict)
         {
-            if(s[i] != t[i]) d++;
-        }
-        return d == 1;
-    }
-    int ladderLength(string b, string e, vector<string>& a) {
-        bool found=0;
-        set<string> st;
-        for(auto i: a)
-        {
-            st.insert(i);
-            if(i == e)
-            {
-                found = 1;
-            }
+            mp[i] = 1;
+            if(i == e) found = 1;
         }
         if(!found) return 0;
         
-        queue<string> q;
         q.push(b);
-        
-        int ans = 2;
-        while (!q.empty())
+        mp[b] = 0;
+        while(!q.empty())
         {
-            int n = q.size();
-            vector<string> v;
+            n = q.size();
             while(n--)
             {
-                string s = q.front();
+                auto curr = q.front();
                 q.pop();
-                
-                for(int i = 0 ; i <s.size(); i++)
+                for(int i = 0 ; i < curr.size(); i++)
                 {
-                    string temp = s;
-                    for(char c = 'a' ; c <= 'z'; c++)
+                    char x = curr[i];
+                    for(char c = 'a'; c<='z'; c++)
                     {
-                        temp[i] = c;
-                        if(temp == s) continue;
-                        if(temp == e) return ans;
-                        if(st.find(temp) != st.end())
+                        if(curr[i] == c) continue;
+                        curr[i] = c;
+                        if(curr == e) return ans;
+                        if(mp[curr])
                         {
-                            q.push(temp);
-                            st.erase(temp);
+                            mp[curr] = 0;
+                            q.push(curr);
                         }
                     }
+                    curr[i] = x;
                 }
             }
             ans++;
