@@ -1,78 +1,93 @@
 class Solution {
 public:
     vector<int> sortItems(int n, int m, vector<int>& group, vector<vector<int>>& bef) {
-        for(int i = 0 ; i < n; i++)
+        // making new self groups for members with no groups
+        for (int i = 0 ; i < n; i++)
         {
-            if(group[i] == -1)
+            if (group[i] == -1)
                 group[i] = m++;
         }
-        vector<int> gid(m), deg(n);
+
+        vector<int> group_in_degree(m), in_degree(n);
+
+        // invers of after graph
         vector<vector<int>> after(n);
-        map<int, vector<int>> gmem;
-        for(int i = 0 ; i < n ; i++)
+
+        // mapping group to its members
+        map<int, vector<int>> group_members;
+
+        for (int i = 0 ; i < n ; i++)
         {
-            for(auto x: bef[i])
+            for (auto x : bef[i])
             {
                 after[x].push_back(i);
-                deg[i]++;
-            if(group[i] != group[x])
-                gid[group[i]]++;
+
+                // edge from x(before) to i(after)
+                in_degree[i]++;
+
+                // add degree of group if they are from different groups
+                if (group[i] != group[x])
+                {
+                    group_in_degree[group[i]]++;
+                }
             }
-            gmem[group[i]].push_back(i);
+            group_members[group[i]].push_back(i);
         }
-        queue<int> q;
-        for(int i = 0 ; i < m; i++)
+
+        queue<int> group_q;
+        for (int i = 0 ; i < m; i++)
         {
-            if(gid[i] == 0)
+            if (group_in_degree[i] == 0)
             {
-                q.push(i);
+                group_q.push(i);
             }
         }
+
         vector<int> ans;
-        
-        // cout<<"stage 1 clear"<<q.size();
-        
-        while(!q.empty())
+
+        while (!group_q.empty())
         {
-            int cg = q.front();
-            q.pop();
-            // cout<<cg<<" - group\n";
-            auto items = gmem[cg];
-            queue<int> iq;
-            for(auto i: items)
+            int curr_group = group_q.front();
+            group_q.pop();
+
+            auto items = group_members[curr_group];
+
+            queue<int> item_q;
+            for (auto i : items)
             {
-                if(deg[i] == 0)
+                if (in_degree[i] == 0)
                 {
-                    iq.push(i);
+                    item_q.push(i);
                 }
             }
-            while(!iq.empty())
+
+            while (!item_q.empty())
             {
-                int ci = iq.front();
-                iq.pop();
-                // cout<<ci<<"-curr item"<<endl;
-                ans.push_back(ci);
-                for(auto gm: after[ci])
+                int curr_item = item_q.front();
+                item_q.pop();
+
+                // add item to ans
+                ans.push_back(curr_item);
+                for (auto child : after[curr_item])
                 {
-                    // cout<<gm<<endl;
-                    if(--deg[gm] == 0 and group[gm] == group[ci])
+                    // add after item if in same group
+                    if (--in_degree[child] == 0 and group[child] == group[curr_item])
                     {
-                        // cout<<"same grp"<<gm<<endl;
-                        iq.push(gm);
+                        item_q.push(child);
                     }
-                    if(group[gm] != group[ci])
+                    // check if degree of child group can be reduced if from another group
+                    if (group[child] != group[curr_item])
                     {
-                        if(--gid[group[gm]] == 0)
-                            q.push(group[gm]);
+                        if (--group_in_degree[group[child]] == 0)
+                            group_q.push(group[child]);
                     }
                 }
             }
         }
-        // for(auto i: ans)
-        // {
-        //     cout<<i<<" ";
-        // }
-        if(ans.size() != n) ans.clear();
+
+        // if all intems not in ans, ans is not possible
+        if (ans.size() != n) ans.clear();
+        
         return ans;
     }
 };
