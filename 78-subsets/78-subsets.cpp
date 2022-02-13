@@ -1,20 +1,17 @@
 class Solution {
 public:
-    set<vector<int>> ans;
-    void rec(vector<int>& nums, int i, vector<int> &v)
-    {
-        if(i == nums.size()) return;
-        v.push_back(nums[i]);
-        ans.insert(v);
-        rec(nums, i+1, v);
-        
-        v.pop_back();
-        ans.insert(v);
-        rec(nums, i+1, v);
-    }
     vector<vector<int>> subsets(vector<int>& nums, int i = 0) {
-        vector<int>v;
-        rec(nums, 0, v);
-        return vector<vector<int>> (ans.begin(), ans.end());
+        int n = pow(2,nums.size());
+        vector<vector<int>> ans;
+        for(int i = 0 ; i < n ; i ++)
+        {
+            vector<int> v;
+            for(int x = 0; x<nums.size(); x++)
+            {
+                if(i>>x & 1) v.push_back(nums[x]);
+            }
+            ans.push_back(v);
+        }
+        return ans;
     }
 };
