@@ -11,7 +11,9 @@
  */
 class Solution {
 public:
+    map<int, vector<TreeNode*>>dp;
     vector<TreeNode*> allPossibleFBT(int n) {
+        if(dp.find(n) != dp.end()) return dp[n];
         vector<TreeNode*> v;
         if(n == 0 or n == 2)
         {
@@ -52,6 +54,6 @@ public:
                 }
             }
         }
-        return v;
+        return dp[n] = v;
     }
 };
