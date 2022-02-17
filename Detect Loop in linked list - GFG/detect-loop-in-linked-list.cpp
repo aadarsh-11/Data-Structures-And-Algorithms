@@ -46,13 +46,17 @@ class Solution
 {
     public:
     //Function to check if the linked list has a loop.
-    map<Node*, bool> mp;
     bool detectLoop(Node* head)
     {
-        if(!head) return false;
-        if(mp[head]) return true;
-        mp[head] = true;
-        return detectLoop(head->next);
+        Node* slow = head, *fast = head;
+        while(fast && fast->next)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow)
+            return true;
+        }
+        return false;
     }
 };
 
