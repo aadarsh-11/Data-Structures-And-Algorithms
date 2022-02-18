@@ -7,7 +7,7 @@ public:
         int mid;
         while(l<=r)
         {
-            mid = (l+r)/2;
+            mid = (l+r)>>1;
             if(a[mid]==t) return mid;
             if(a[l]<=a[mid])
             {
