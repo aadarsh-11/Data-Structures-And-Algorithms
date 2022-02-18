@@ -4,10 +4,9 @@ public:
         int n = a.size();
         int l = 0;
         int r = n-1;
-        int mid;
         while(l<=r)
         {
-            mid = (l+r)>>1;
+            int mid = (l+r)>>1;
             if(a[mid]==t) return mid;
             if(a[l]<=a[mid])
             {
