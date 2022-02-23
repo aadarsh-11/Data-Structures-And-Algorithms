@@ -21,7 +21,7 @@ public:
 
 class Solution {
 public:
-    map<int, Node*> done;
+    unordered_map<int, Node*> done;
     Node* cloneGraph(Node* node) {
         if(!node) return node;
         Node* head = new Node(node->val);
