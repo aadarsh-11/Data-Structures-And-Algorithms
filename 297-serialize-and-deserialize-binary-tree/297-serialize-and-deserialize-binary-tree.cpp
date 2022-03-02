@@ -13,38 +13,42 @@ public:
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         // base case;
-        if(!root) return "v:#";
+        if(!root) return "#";
         
         // add root value;
-        string ans = "v:" + to_string(root->val) + ",";
+        string ans = to_string(root->val) + ",";
         
         //call for left rec
         string left = serialize(root->left);
         int ls = left.size()+1;
+        
         //add size of left substring and then add left string;
         ans += to_string(ls) + "," + left + ",";
         
         //do the same for right;
         string right = serialize(root->right);
-        int rs = right.size();
-        ans += to_string(rs) + "," + right;
-        // cout<<ans<<endl;
+        ans += right;
+
         return ans;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        if(data[2] == '#') return NULL;
-        int i = 2;
-        int val = 0;
-        int sign = 0;
+        // check for null Node
+        if(data[0] == '#') return NULL;
         
+        int i = 0;
+        int sign = 0;
+        int val = 0;
+        
+        // check for negetive sign
         if(data[i] == '-')
         {
             sign = 1;
             i++;
         }
         
+        //calculate root val;
         while(data[i] != ',')
         {
             val = val*10 + (data[i]-'0');
@@ -52,8 +56,13 @@ public:
         }
         if(sign) val *= -1;
         
+        //create root node
         TreeNode* root = new TreeNode(val);
+        
+        // currently at comma so go ahead
         i++;
+        
+        //size of left subtree string
         int ls = 0;
         while(data[i] != ',')
         {
@@ -61,18 +70,15 @@ public:
             i++;
         }
         i++;
+        
+        //recurse for the left subtree
         root->left = deserialize(data.substr(i,ls));
+        
+        //go to the first index of right subtree string
         i += ls;
         
-        
-        int rs = 0;
-        while(data[i] != ',')
-        {
-            rs = rs*10 + (data[i]-'0');
-            i++;
-        }
-        i++;
-        root->right = deserialize(data.substr(i,rs));
+        // recurse for the right subtree
+        root->right = deserialize(data.substr(i, data.size()-ls-2));
         
         return root;
     }
