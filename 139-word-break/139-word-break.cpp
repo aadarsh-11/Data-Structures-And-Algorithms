@@ -1,8 +1,8 @@
 class Solution {
 public:
     bool inserted = 0;
-    set<string> st;
-    map<string, bool> dp;
+    unordered_set<string> st;
+    unordered_map<string, bool> dp;
     bool wordBreak(string s, vector<string>& dict) {
         if(s == "") return true;
         if(dp.find(s) != dp.end()) return dp[s];
