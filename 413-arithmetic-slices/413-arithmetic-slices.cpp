@@ -8,15 +8,9 @@ public:
         int cnt = 0;
         for(int i = 1 ; i < n-1; i++)
         {
-            if(a[i+1]-a[i] == pd)
-            {
-                ans += ++cnt;
-            }
-            else
-            {
-                pd = a[i+1]-a[i];
-                cnt = 0;
-            }
+            a[i+1]-a[i] == pd ? cnt++ : cnt = 0;
+            pd = a[i+1]-a[i];
+            ans += cnt;
         }
         return ans;
     }
