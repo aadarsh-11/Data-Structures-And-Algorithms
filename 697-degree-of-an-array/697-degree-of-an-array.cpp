@@ -1,7 +1,7 @@
 class Solution {
 public:
     int findShortestSubArray(vector<int>& a) {
-        map<int,int> cnt;
+        unordered_map<int,int> cnt;
         unordered_map<int,pair<int,int>> mp;
         int maxf = 0;
         int ans = a.size();
