@@ -7,7 +7,7 @@ public:
         for(int i =2; i<=n; i++)
         {
             int x = (i-1)*2+1;
-            dp *= ((x*(x+1))/2 );
+            dp *= (x*(x+1))/2;
             dp %= mod;
         }
         return (int)dp;
