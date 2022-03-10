@@ -9,11 +9,10 @@ public:
     }
     
     void set(int index, int val) {
-        if(snaps[index].size() > 0 and snaps[index].back().second == val) return;
-        if(snaps[index].size() > 0 and snaps[index].back().first == snap_id)
-            snaps[index].back().second = val;
-        else
+        if(snaps[index].empty() || snaps[index].back().first < snap_id)
             snaps[index].push_back({snap_id, val});
+        else
+            snaps[index].back().second = val;
     }
     
     int snap() {
@@ -24,23 +23,11 @@ public:
         int n = snaps[index].size();
         int l = 0, r = n-1;
         
-        if(n == 0 or snaps[index][l].first > snap_id) return 0;
+        auto it = upper_bound(snaps[index].begin(), snaps[index].end(), make_pair(snap_id,INT_MAX));
         
-        while(l<r)
-        {
-            int mid = l + (r-l)/2;
-            if(snaps[index][mid].first <= snap_id)
-            {
-                l = mid+1;
-            }
-            else
-            {
-                r = mid-1;
-            }
-        }
-        if(l >= n or snaps[index][l].first > snap_id) l--;
+        if(it == snaps[index].begin()) return 0;
         
-        return snaps[index][l].second;
+        return prev(it)->second;
     }
 };
 
