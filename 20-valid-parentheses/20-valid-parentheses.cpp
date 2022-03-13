@@ -9,10 +9,8 @@ public:
             else
             {
                 if(st.empty()) return false;
-                if(i == ')' and st.top() != '(') return false;
-                if(i == '}' and st.top() != '{') return false;
-                if(i == ']' and st.top() != '[') return false;
-                st.pop();
+                if(i - st.top() == 1 or i - st.top() == 2) st.pop();
+                else return false;
             }
         }
         return st.empty();
