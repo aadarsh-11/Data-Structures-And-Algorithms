@@ -15,28 +15,24 @@ public:
             if(a[i] == 0)
             {
                 if(dp[i-1][0] == 0)
-                    dp[i][0] = dp[i-1][0]+1;
+                    dp[i][0] = (dp[i-1][0]+1)%mod;
                 else
-                    dp[i][0] = (dp[i-1][0] +1) *2 -1;
+                    dp[i][0] = ((dp[i-1][0] +1) *2 -1)%mod;
                 
                 dp[i][1] = dp[i-1][1];
                 dp[i][2] = dp[i-1][2];
             }
             else if(a[i] == 1)
             {
-                dp[i][1] = (dp[i-1][1]*2)%mod + dp[i-1][0];
+                dp[i][1] = ((dp[i-1][1]*2)%mod + dp[i-1][0])%mod;
                 dp[i][0] = dp[i-1][0];
                 dp[i][2] = dp[i-1][2];
             }
             else
             {
-                dp[i][2] = (dp[i-1][2] *2)%mod + dp[i-1][1];
+                dp[i][2] = ((dp[i-1][2] *2)%mod + dp[i-1][1])%mod;
                 dp[i][0] = dp[i-1][0];
                 dp[i][1] = dp[i-1][1];
-            }
-            for(int j = 0 ; j< 3; j++)
-            {
-                dp[i][j] %= mod;
             }
         }
         return dp[n-1][2];
