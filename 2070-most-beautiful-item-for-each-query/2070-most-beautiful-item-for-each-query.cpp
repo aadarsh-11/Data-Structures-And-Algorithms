@@ -7,7 +7,6 @@ public:
             items[i][1] = max(items[i][1],items[i-1][1]);
         }
         vector<int> res;
-        int ans;
         for(auto &q: queries)
         {
             int l = 0 ;
@@ -25,9 +24,10 @@ public:
                 }
             }
             if(items[l][0] > q) l--;
-            if(l<0) ans = 0;
-            else ans = items[l][1];
-            res.push_back(ans);
+            if(l<0)
+                res.push_back(0);
+            else 
+                res.push_back(items[l][1]);
         }
         return res;
     }
