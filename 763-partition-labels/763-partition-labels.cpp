@@ -11,13 +11,11 @@ public:
         int cl = mp[s[0]-'a'];
         for(int i = 0 ; i<s.size(); i++)
         {
-            if(mp[s[i]-'a'] > cl)
-                cl = mp[s[i]-'a'];
+            cl = max(cl, mp[s[i]-'a']);
             if(i == cl)
             {
                 ans.push_back(cl-cs+1);
                 cs = i+1;
-                cl = i+1;
             }
         }
         return ans;
