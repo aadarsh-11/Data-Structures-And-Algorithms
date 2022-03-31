@@ -17,7 +17,7 @@ public:
         int left = max_no;
         int right = sum;
         
-        while(left <= right)
+        while(left < right)
         {
             int mid = left + (right-left)/2;
             
@@ -35,7 +35,7 @@ public:
             if(splits <= m)
             {
                 ans = min(ans, mid);
-                right = mid - 1;
+                right = mid;
             }
             else
             {
