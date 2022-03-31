@@ -1,21 +1,17 @@
 class Solution {
 public:
     int splitArray(vector<int>& nums, int m) {
-        int sum = 0;
-        int max_no = 0;
+        int right = 0;
+        int left = 0;
         
         for(auto i: nums)
         {
-            max_no = max(max_no, i);
-            sum += i;
+            left = max(left, i);
+            right += i;
         }
         
         //binary search the answer;
-        
-        int ans = sum;
-        
-        int left = max_no;
-        int right = sum;
+        int ans = right;
         
         while(left < right)
         {
