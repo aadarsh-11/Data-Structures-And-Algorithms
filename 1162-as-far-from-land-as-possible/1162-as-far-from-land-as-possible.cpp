@@ -28,6 +28,6 @@ public:
                 ans = max(ans,grid[i][j]);
             }
         }
-        return ans > 1 and ans < 200 ? ans - 1 : -1;
+        return ans != 201 ? ans - 1 : -1;
     }
 };
