@@ -3,22 +3,23 @@ public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         vector<int> ans(k);
         map<int,int> mp;
+        
         for(int i = 0 ; i < nums.size() ; i++)
         {
             mp[nums[i]]++;
         }
-        vector<pair<int,int>> vp;
+        
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
         for(auto i : mp)
         {
-            vp.push_back({i.second,i.first});
+            pq.push({i.second,i.first});
+            if(pq.size() > k) pq.pop();
         }
-        sort(vp.rbegin(), vp.rend());
-        
         int j = 0;
-        for(auto i : vp)
+        while(!pq.empty())
         {
-            if(j == k) break;
-            ans[j++] = i.second;
+            ans[j++] = pq.top().second;
+            pq.pop();
         }
         return ans;
     }
