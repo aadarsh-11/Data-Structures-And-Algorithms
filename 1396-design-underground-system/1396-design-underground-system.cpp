@@ -1,7 +1,7 @@
 class UndergroundSystem {
 public:
-    unordered_map<string, pair<int,int>> costs;
-    unordered_map<int,pair<string,int>> checkin;
+    map<string, pair<int,int>> costs;
+    map<int,pair<string,int>> checkin;
     
     UndergroundSystem() {}
     
