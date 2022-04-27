@@ -51,23 +51,22 @@ public:
         {
             uf.Union(v[0],v[1]);
         }
-        map<int,string> mp;
-        map<int,int> ind;
+        unordered_map<int,pair<int,string>> mp;
         
         for(int i = 0 ; i < n ; i++)
         {
             int g = uf.Find(i);
-            mp[g] += s[i];
+            mp[g].second += s[i];
         }
         for(auto &i: mp)
         {
-            sort(i.second.begin(),i.second.end());
+            sort(i.second.second.begin(),i.second.second.end());
         }
-        string ans(n,'*');
         for(int i = 0 ; i < n ; i++)
         {
-            ans[i] = mp[uf.Find(i)][ind[uf.Find(i)]++];
+            auto &mpp = mp[uf.Find(i)];
+            s[i] = mpp.second[mpp.first++];
         }
-        return ans;
+        return s;
     }
 };
