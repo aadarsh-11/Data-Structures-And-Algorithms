@@ -2,11 +2,11 @@ class Solution {
 public:
     bool isBipartite(vector<vector<int>>& g) {
         int n = g.size();
-        vector<int> vis(n,0), col(n,-1);
+        vector<int> col(n,-1);
         queue<int> q;
         for(int i = 0 ; i < n ; i++)
         {
-            if(!vis[i])
+            if(col[i] == -1)
             {                
                 q.push(i);
                 col[i] = 0;
@@ -15,11 +15,11 @@ public:
                 {
                     int u = q.front();
                     q.pop();
-                    vis[u]++;
+                    // vis[u]++;
                     for(auto v: g[u])
                     {
                         if(col[u] == col[v]) return false;
-                        if(!vis[v])
+                        if(col[v] == -1)
                         {
                             q.push(v);
                             col[v] = 1-col[u];
