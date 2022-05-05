@@ -1,6 +1,6 @@
 class MyStack {
 public:
-    queue<int> q1,q2;
+    queue<int> q2;
     bool full = 0;
     int tp;
     MyStack() {
