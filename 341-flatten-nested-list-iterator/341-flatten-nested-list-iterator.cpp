@@ -20,7 +20,6 @@ class NestedIterator {
 public:
     stack<int> st;
     NestedIterator(vector<NestedInteger> &nestedList) {
-        // for(int i = nestedList.size()-1; i>=0; i--) st.push(nestedList[i]);
         flaten(nestedList);
     }
     
