@@ -1,26 +1,25 @@
 class Solution {
 public:
-    set<vector<int>> ans;
-    void f(vector<int>&nums, int ind)
+    vector<vector<int>> ans;
+    void f(unordered_map<int,int> &mp,vector<int>&curr, int n)
     {
-        if(ind == nums.size()-1)
-        {
-            ans.insert(nums);
-            return;
-        }
-        for(int i = ind+1;i<nums.size(); i++)
-        {
-            if(nums[i] != nums[ind])
+        if(curr.size() == n) ans.push_back(curr);
+        for(auto &i: mp)
+            if(i.second > 0)
             {
-                swap(nums[i], nums[ind]);
-                f(nums, ind+1);
-                swap(nums[i], nums[ind]);
+                i.second--;
+                curr.push_back(i.first);
+                f(mp,curr,n);
+                curr.pop_back();
+                i.second++;
             }
-        }
-        f(nums, ind+1);
     }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        f(nums, 0);
-        return vector<vector<int>>(ans.begin(),ans.end());
+        unordered_map<int,int> mp;
+        for(auto i: nums)
+            mp[i]++;
+        vector<int> curr;
+        f(mp,curr, nums.size());
+        return ans;
     }
 };
