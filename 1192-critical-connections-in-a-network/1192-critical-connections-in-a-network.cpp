@@ -2,18 +2,18 @@ class Solution {
 public:
     vector<vector<int>> ans;
     int timer;
-    void dfs(int curr, int par, vector<vector<int>>& g, vector<int>& inTime, vector<int>& low, vector<int>& vis)
+    void dfs(int curr, int par, vector<vector<int>>& g, vector<int>& low, vector<int>& vis)
     {
         vis[curr]= 1;
-        inTime[curr] = low[curr] = timer++;
+        int inTime = low[curr] = timer++;
         for(auto v: g[curr])
         {
             if(v == par) continue;
             
             if(!vis[v])
             {
-                dfs(v,curr,g,inTime,low,vis);
-                if(low[v] > inTime[curr])
+                dfs(v,curr,g,low,vis);
+                if(low[v] > inTime)
                 {
                     ans.push_back({curr,v});
                 }
@@ -31,11 +31,11 @@ public:
             g[v].push_back(u);
         }
         timer = 0;
-        vector<int> vis(n,0), inTime(n,0), low(n,0);
+        vector<int> vis(n,0), low(n,0);
         for(int i = 0 ; i<n; i++)
         {
             if(!vis[i])
-                dfs(i,-1,g,inTime, low, vis);
+                dfs(i,-1,g, low, vis);
         }
         return ans;
     }
