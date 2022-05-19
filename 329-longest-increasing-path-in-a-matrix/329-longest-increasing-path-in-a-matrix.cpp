@@ -23,18 +23,13 @@ public:
         int ans = 1;
         
         vector<vector<int>> vis(n,vector<int>(m));
-        // ans = dfs(2,1,a,vis);
+        
         for(int i = 0 ; i< n ; i++)
         {
             for(int j = 0 ; j < m ; j++)
             {
-                if(vis[i][j] == 0)
-                {
-                    ans = max(ans, dfs(i,j,a,vis));
-                }
-                // cout<<vis[i][j]<<" ";
+                ans = max(ans, dfs(i,j,a,vis));
             }
-            // cout<<endl;
         }
         return ans;
     }
