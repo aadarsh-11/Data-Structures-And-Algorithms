@@ -4,9 +4,10 @@ public:
         int ans = 0;
         while(num)
         {
-            ans+=(num & 1 ? 2 : 1);
-            num >>= 1;
+            if(num%2) num--;
+            else num /= 2;
+            ans++;
         }
-        return max(0,ans-1);
+        return ans;
     }
 };
