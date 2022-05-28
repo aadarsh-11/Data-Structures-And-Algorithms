@@ -9,13 +9,10 @@ public:
         
         depth = vector<int>(n);
         up = vector<vector<int>>(n, vector<int>(LOG));
-        // parent[0] = 0;
-        // depth[0] = -1;
         
         for(int i = 0 ; i < n; i++)
         {
             up[i][0] = parent[i];
-            // depth[i] = depth[parent[i]]+1;
         }
         
         for(int j = 1; j < LOG; j++)
@@ -29,7 +26,6 @@ public:
     }
     
     int getKthAncestor(int node, int k) {
-        // if(depth[node]<k) return -1;
         int x = 0;
         while(x<LOG)
         {
