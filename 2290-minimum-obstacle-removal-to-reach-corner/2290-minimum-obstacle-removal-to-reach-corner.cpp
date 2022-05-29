@@ -6,7 +6,8 @@ public:
         
         int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
         vector<vector<int>> dist(n, vector<int>(m,INT_MAX));
-        priority_queue<pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int, pair<int,int>>>> q;
+        // priority_queue<pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int, pair<int,int>>>> q;
+        queue<pair<int, pair<int,int>>> q;
         
         q.push({0,{0,0}});
         dist[0][0] = 0;
@@ -14,9 +15,9 @@ public:
         
         while(!q.empty())
         {
-            int d = q.top().first;
-            int i = q.top().second.first;
-            int j = q.top().second.second;
+            int d = q.front().first;
+            int i = q.front().second.first;
+            int j = q.front().second.second;
             q.pop();
             
             if(d > dist[i][j]) continue;
@@ -32,7 +33,7 @@ public:
                 dist[ni][nj] = grid[ni][nj] + dist[i][j];
                 q.push({dist[ni][nj],{ni,nj}});
                 
-                if(ni == n-1 and nj == m-1) return dist[n-1][m-1];
+                // if(ni == n-1 and nj == m-1) return dist[n-1][m-1];
             }
         }
         return dist[n-1][m-1];
