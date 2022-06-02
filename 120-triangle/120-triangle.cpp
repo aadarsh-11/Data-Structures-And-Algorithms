@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    int f(vector<vector<int>> &a, int row, int col, vector<map<int,int>> &dp)
+    int f(vector<vector<int>> &a, int row, int col, vector<unordered_map<int,int>> &dp)
     {
         if(row >= a.size()) return 0;
         
@@ -10,7 +10,7 @@ public:
     }
     
     int minimumTotal(vector<vector<int>>& triangle) {
-        vector<map<int,int>> dp(triangle.size());
+        vector<unordered_map<int,int>> dp(triangle.size());
         return f(triangle,0,0, dp);
     }
 };
