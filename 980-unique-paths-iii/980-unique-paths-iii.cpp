@@ -21,7 +21,7 @@ public:
             
             dfs(i,j,grid,vis,obs,res);
         }
-        vis[x][y] = 0;   
+        vis[x][y] = 0;
     }
     
     int uniquePathsIII(vector<vector<int>>& grid) {
