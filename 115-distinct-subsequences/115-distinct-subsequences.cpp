@@ -1,30 +1,28 @@
 class Solution {
 public:
-    
-    int f(string &s, string &t, int i, int j, vector<vector<int>> &dp)
-    {
-        // cout<<i<<" "<<j<<endl;
-        if(j < 0) return 1;
-        else if(i<0) return 0;
-        
-        if(dp[i][j] != -1) return dp[i][j];
-        int ans = 0;
-        if(s[i] == t[j])
-        {
-            ans = f(s,t,i-1,j-1, dp) + f(s,t,i-1,j,dp);
-        }
-        else
-        {
-            ans = f(s,t,i-1,j,dp);
-        }
-        // cout<<ans<<endl;
-        return dp[i][j] = ans;
-    }
-    
     int numDistinct(string s, string t) {
         int n = s.size(), m = t.size();
-        vector<vector<int>> dp(n, vector<int>(m,-1));
+        int mod = 1e9+7;
+        vector<vector<int>> dp(n+1, vector<int>(m+1));
         
-        return f(s,t,n-1,m-1, dp);
+        for(int i = 0 ; i<= n ; i++)
+            dp[i][0] = 1;
+        
+        for(int i = 0 ; i < n ; i++)
+        {
+            for(int j = 0; j < m ; j++)
+            {
+                if(s[i] == t[j])
+                {
+                    dp[i+1][j+1] = (dp[i][j] + dp[i][j+1])%mod;
+                }
+                else
+                {
+                    dp[i+1][j+1] = dp[i][j+1];
+                }
+            }
+        }
+        
+        return dp[n][m];
     }
 };
