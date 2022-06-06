@@ -8,25 +8,36 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *a, ListNode *b) {
-        stack<ListNode*> st,ss;
-        while(a)
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int a = 0, b = 0;
+        ListNode* l1 = headA, *l2 = headB;
+        
+        while(l1)
         {
-            st.push(a);
-            a =a ->next;
-        }
-        while(b)
+            a++;
+            l1 = l1 ->next;
+        }        
+        while(l2)
         {
-            ss.push(b);
-            b = b->next;
+            b++;
+            l2 = l2 ->next;
         }
-        ListNode* ans = nullptr;
-        while(!ss.empty() and !st.empty() and ss.top() == st.top())
+        while(a-b>0)
         {
-            ans = ss.top();
-            ss.pop();
-            st.pop();
+            headA = headA->next;
+            a--;
+        }        
+        while(b-a>0)
+        {
+            headB = headB->next;
+            b--;
         }
-        return (ans?ans:NULL);
+        while(headA != headB)
+        {
+            headA = headA->next;
+            headB = headB->next;
+        }
+        
+    return headA;
     }
 };
