@@ -1,10 +1,8 @@
 class Node {
 public:
     vector<Node*> next;
-    bool isWord;
     Node()
     {
-        isWord = 0;
         next.resize(26, NULL);
     }
 };
