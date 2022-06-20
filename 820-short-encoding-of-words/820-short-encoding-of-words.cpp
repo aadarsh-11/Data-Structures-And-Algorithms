@@ -1,39 +1,50 @@
+class Node {
+public:
+    vector<Node*> next;
+    bool isWord;
+    Node()
+    {
+        isWord = 0;
+        next.resize(26, NULL);
+    }
+};
+
+class Trie {
+public:
+    Node* root = new Node();
+    
+    int insert(string &s)
+    {
+        bool ret = 0;
+        Node* curr = root;
+        for(auto c: s)
+        {
+            int i = c-'a';
+            if(curr->next[i] == NULL)
+            {
+                curr->next[i] = new Node();
+                ret = 1;
+            }
+            curr = curr->next[i];
+        }
+        return (ret ? s.size() + 1: 0);
+    }
+};
+
 class Solution {
 public:
-    bool cmp(string &s1,string &s2)
-    {
-        int i = s1.size()-1;
-        int j = s2.size()-1;
-        while(j>=0 and s1[i] == s2[j])
-        {
-            i--;
-            j--;
-        }
-        return j == -1;
-    }
     int minimumLengthEncoding(vector<string>& words) {
         sort(words.begin(), words.end(), [&](string &s1,string &s2) {
-            return s1.size() < s2.size();
+            return s1.size() > s2.size();
         });
         
-        int cnt = words.size();
-        int len = 0;
-        
-        for(int i = 0 ; i < words.size(); i++)
+        Trie t;
+        int ans = 0;
+        for(auto &s: words)
         {
-            string s = words[i];
-            len += s.size();
-            for(int j = words.size()-1; j > i; j--)
-            {
-                string t = words[j];
-                if(cmp(t,s))
-                {
-                    len -= s.size();
-                    cnt--;
-                    break;
-                }
-            }
+            reverse(s.begin(), s.end());
+            ans += t.insert(s);
         }
-        return len+cnt;
+        return ans;
     }
 };
