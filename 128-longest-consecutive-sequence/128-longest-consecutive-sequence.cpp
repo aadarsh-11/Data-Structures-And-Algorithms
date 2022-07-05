@@ -1,16 +1,17 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        int ans = 0;
-        int cmax = 1;
         int n = nums.size();
-        if(n) ans++;
+        int ans = (n>0);
+        int cmax = 1;
+        
         map<long long int,int> mp;
+        
         for(auto i:nums)
-        {
             mp[i]++;
-        }
+        
         long long int lm = INT_MIN;
+        
         for(auto i: mp)
         {
             if(i.first - lm == 1ll)
@@ -24,6 +25,7 @@ public:
             }
             lm = i.first;
         }
+        
         return ans;
     }
 };
