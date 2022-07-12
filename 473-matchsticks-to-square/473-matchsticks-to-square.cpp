@@ -21,6 +21,8 @@ public:
         int sum = accumulate(a.begin(), a.end(),0);
         if(a.size()<4 or sum%4) return 0;
         
+        sort(a.rbegin(), a.rend());
+        
         vector<int>vis(a.size(),0);
         
         return rec(0,vis,0,a,sum/4, 4);
